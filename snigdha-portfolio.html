@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snigdha Patibandla — AI & Data Engineer</title>
+<style>
+  :root {
+    --text-primary: #111111;
+    --text-secondary: #555555;
+    --text-tertiary: #888888;
+    --border: #e4e4e4;
+    --bg: #ffffff;
+    --bg-secondary: #f7f6ff;
+    --accent: #4f3cc9;
+    --accent-light: #ede9ff;
+    --accent-mid: #7c63e0;
+    --green-bg: #edf7f0;
+    --green-text: #1a6b3a;
+    --blue-bg: #edf3fb;
+    --blue-text: #1a4a8a;
+    --amber-bg: #fdf4e7;
+    --amber-text: #7a4a00;
+    --tag-bg: #f0eeff;
+    --tag-text: #4f3cc9;
+    --tag-border: #d4ccf5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --text-primary: #f0f0f0;
+      --text-secondary: #aaaaaa;
+      --text-tertiary: #666666;
+      --border: #2a2a2a;
+      --bg: #111111;
+      --bg-secondary: #1a1730;
+      --accent: #9b85f5;
+      --accent-light: #1e1a3a;
+      --accent-mid: #7c63e0;
+      --green-bg: #0d2e18;
+      --green-text: #5ecb87;
+      --blue-bg: #0d1e38;
+      --blue-text: #7ab0f0;
+      --amber-bg: #2a1e00;
+      --amber-text: #e8b060;
+      --tag-bg: #1e1a3a;
+      --tag-text: #9b85f5;
+      --tag-border: #3a2e6a;
+    }
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* Layout */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 1.5rem; }
+  .page { padding: 3rem 0 5rem; }
+
+  /* Nav */
+  nav {
+    border-bottom: 0.5px solid var(--border);
+    padding: 0.9rem 0;
+    position: sticky; top: 0;
+    background: var(--bg);
+    z-index: 10;
+  }
+  .nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  .nav-name { font-size: 14px; font-weight: 500; color: var(--accent); }
+  .nav-links { display: flex; gap: 1.5rem; }
+  .nav-links a { font-size: 13px; color: var(--text-secondary); }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* Hero */
+  .hero { padding: 2.5rem 0 2.5rem; border-bottom: 0.5px solid var(--border); }
+  .hero-name { font-size: 32px; font-weight: 500; letter-spacing: -0.5px; color: var(--accent); }
+  .hero-tagline { font-size: 15px; color: var(--text-secondary); margin-top: 6px; }
+  .avail {
+    display: inline-flex; align-items: center; gap: 7px;
+    margin-top: 14px; font-size: 12px; font-weight: 500;
+    background: var(--green-bg); color: var(--green-text);
+    padding: 5px 14px; border-radius: 100px;
+  }
+  .avail-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green-text); }
+  .hero-links { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  .hero-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--text-secondary);
+    border: 0.5px solid var(--border);
+    padding: 6px 14px; border-radius: 6px;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .hero-link:hover { border-color: var(--text-tertiary); color: var(--text-primary); }
+  .hero-link svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+  /* Section */
+  .section { padding: 2.5rem 0; border-bottom: 0.5px solid var(--border); }
+  .section:last-child { border-bottom: none; }
+  .section-label {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 1.4rem;
+  }
+
+  /* About */
+  .about-text { font-size: 14px; line-height: 1.8; color: var(--text-secondary); max-width: 640px; }
+  .about-text strong { color: var(--text-primary); font-weight: 500; }
+
+  /* Projects */
+  .projects { display: grid; gap: 12px; }
+  .project {
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    background: var(--bg);
+    transition: border-color 0.15s;
+  }
+  .project:hover { border-color: var(--accent-mid); border-left: 3px solid var(--accent); }
+  .project-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .project-title { font-size: 15px; font-weight: 500; color: var(--text-primary); }
+  .project-client { font-size: 12px; color: var(--text-tertiary); margin-top: 3px; }
+  .badge {
+    font-size: 11px; padding: 3px 10px; border-radius: 100px;
+    white-space: nowrap; flex-shrink: 0; font-weight: 500;
+  }
+  .badge-prod { background: var(--green-bg); color: var(--green-text); }
+  .badge-ml { background: var(--blue-bg); color: var(--blue-text); }
+  .badge-academic { background: var(--amber-bg); color: var(--amber-text); }
+  .project-desc { font-size: 13px; color: var(--text-secondary); margin-top: 10px; line-height: 1.7; }
+  .metrics { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 12px; }
+  .metric {
+    font-size: 12px; padding: 3px 10px;
+    background: var(--bg-secondary); border-radius: 5px;
+    color: var(--text-secondary); border: 0.5px solid var(--border);
+  }
+  .metric strong { color: var(--accent); font-weight: 500; }
+  .stack {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    margin-top: 12px; padding-top: 10px;
+    border-top: 0.5px solid var(--border);
+  }
+  .tag {
+    font-size: 11px; color: var(--tag-text);
+    padding: 2px 8px; border: 0.5px solid var(--tag-border);
+    border-radius: 4px; background: var(--tag-bg);
+  }
+
+  /* Skills */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+  .skill-group { background: var(--bg-secondary); border-radius: 8px; padding: 1rem; border: 0.5px solid var(--tag-border); }
+  .skill-group-name { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent-mid); margin-bottom: 9px; }
+  .skill-list { font-size: 13px; color: var(--text-primary); line-height: 2; }
+
+  /* Experience */
+  .exp-list { display: grid; gap: 10px; }
+  .exp-item {
+    border: 0.5px solid var(--border); border-radius: 10px;
+    padding: 1.1rem 1.25rem; background: var(--bg);
+  }
+  .exp-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+  .exp-role { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+  .exp-company { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+  .exp-dates { font-size: 12px; color: var(--text-tertiary); white-space: nowrap; flex-shrink: 0; }
+  .exp-bullets { margin-top: 10px; padding-top: 10px; border-top: 0.5px solid var(--border); }
+  .exp-bullets li {
+    font-size: 13px; color: var(--text-secondary); line-height: 1.65;
+    margin-bottom: 5px; padding-left: 14px; position: relative; list-style: none;
+  }
+  .exp-bullets li::before { content: "–"; position: absolute; left: 0; color: var(--text-tertiary); }
+
+  /* Certs */
+  .certs { display: flex; gap: 8px; flex-wrap: wrap; }
+  .cert {
+    font-size: 13px; padding: 6px 14px; color: var(--text-secondary);
+    border: 0.5px solid var(--border); border-radius: 6px;
+  }
+
+  /* Contact */
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+  .contact-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 0.9rem 1rem; border: 0.5px solid var(--border);
+    border-radius: 10px; font-size: 13px; color: var(--text-secondary);
+    transition: border-color 0.15s;
+  }
+  .contact-item:hover { border-color: var(--text-tertiary); color: var(--text-primary); }
+  .contact-item svg { width: 16px; height: 16px; flex-shrink: 0; color: var(--text-tertiary); }
+
+  /* Footer */
+  .footer { padding: 2rem 0 0; }
+  .footer-text { font-size: 12px; color: var(--text-tertiary); }
+
+  @media (max-width: 600px) {
+    .hero-name { font-size: 26px; }
+    .nav-links { display: none; }
+    .project-header { flex-direction: column; }
+    .exp-top { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-name">Snigdha Patibandla</span>
+    <div class="nav-links">
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container page">
+
+  <div class="hero">
+    <h1 class="hero-name">Snigdha Patibandla</h1>
+    <p class="hero-tagline">AI &amp; Data Engineer &nbsp;·&nbsp; MIT (AI), Macquarie University &nbsp;·&nbsp; Sydney, Australia</p>
+    <div class="avail"><span class="avail-dot"></span>Available from June 2026 &nbsp;·&nbsp; Full Australian work rights</div>
+    <div class="hero-links">
+      <a class="hero-link" href="https://linkedin.com/in/snigdha-patibandla" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a class="hero-link" href="https://github.com/SnigdhaP2022" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+        GitHub
+      </a>
+      <a class="hero-link" href="mailto:snigdha.patibandla@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        snigdha.patibandla@gmail.com
+      </a>
+    </div>
+  </div>
+
+  <div class="section" id="about">
+    <div class="section-label">About</div>
+    <p class="about-text">
+      I build production AI systems — LLM evaluation frameworks, document intelligence pipelines, and cloud-based ML solutions. 
+      Most recently at <strong>truuth Pty Ltd</strong>, I delivered five AI projects including a 
+      <strong>multi-model LLM evaluation framework</strong> improving accuracy from 66% to 88%, and a 
+      <strong>document intelligence pipeline</strong> processing 1,603 pages at 100% validation accuracy — 
+      both for a <strong>PwC insurance client</strong>. Prior to that, at Amazon in Hyderabad I maintained 
+      95%+ accuracy across AI-powered mapping systems at production scale.
+      I work across the full build cycle: problem scoping, model selection, pipeline engineering, and stakeholder delivery.
+    </p>
+  </div>
+
+  <div class="section" id="projects">
+    <div class="section-label">Projects</div>
+    <div class="projects">
+
+      <div class="project">
+        <div class="project-header">
+          <div>
+            <div class="project-title">Multi-model LLM evaluation framework</div>
+            <div class="project-client">truuth Pty Ltd &nbsp;·&nbsp; PwC insurance client</div>
+          </div>
+          <span class="badge badge-prod">Production</span>
+        </div>
+        <p class="project-desc">Designed and built an evaluation framework benchmarking Claude Sonnet, Opus, Haiku, and Qwen3-235B on structured insurance document classification tasks. Framework provided auditable, evidence-based grounds for model selection and was adopted directly for a live PwC client engagement.</p>
+        <div class="metrics">
+          <div class="metric"><strong>66% → 88%</strong> accuracy improvement</div>
+          <div class="metric"><strong>4 models</strong> benchmarked</div>
+          <div class="metric">Production-adopted</div>
+        </div>
+        <div class="stack">
+          <span class="tag">Python</span>
+          <span class="tag">AWS Bedrock</span>
+          <span class="tag">Claude API</span>
+          <span class="tag">Qwen3-235B</span>
+          <span class="tag">Prompt engineering</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <div>
+            <div class="project-title">TAL document intelligence pipeline</div>
+            <div class="project-client">truuth Pty Ltd &nbsp;·&nbsp; TAL Insurance</div>
+          </div>
+          <span class="badge badge-prod">Production-approved</span>
+        </div>
+        <p class="project-desc">Built an end-to-end document processing pipeline for TAL Insurance records covering structured and unstructured formats. Achieved 100% validation accuracy across 1,603 pages and received full production approval for deployment.</p>
+        <div class="metrics">
+          <div class="metric"><strong>1,603 pages</strong> processed</div>
+          <div class="metric"><strong>100%</strong> validation accuracy</div>
+          <div class="metric">Production-approved</div>
+        </div>
+        <div class="stack">
+          <span class="tag">Python</span>
+          <span class="tag">SQL</span>
+          <span class="tag">AWS</span>
+          <span class="tag">Document parsing</span>
+          <span class="tag">Validation pipelines</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <div>
+            <div class="project-title">AI watermark detection system</div>
+            <div class="project-client">truuth Pty Ltd &nbsp;·&nbsp; PwC insurance client</div>
+          </div>
+          <span class="badge badge-prod">Client delivery</span>
+        </div>
+        <p class="project-desc">Engineered a vision-language AI system to detect AI-generated content in insurance claims. Used Qwen3-VL-235B via AWS Bedrock to identify synthetic and watermarked content at scale, reducing manual review overhead for the client team.</p>
+        <div class="metrics">
+          <div class="metric">Vision-language model</div>
+          <div class="metric">Insurance fraud detection</div>
+          <div class="metric">AWS Bedrock</div>
+        </div>
+        <div class="stack">
+          <span class="tag">Qwen3-VL-235B</span>
+          <span class="tag">AWS Bedrock</span>
+          <span class="tag">Python</span>
+          <span class="tag">Computer vision</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <div>
+            <div class="project-title">Vendor validation agent — ABN pre-screener</div>
+            <div class="project-client">truuth Pty Ltd</div>
+          </div>
+          <span class="badge badge-prod">Production</span>
+        </div>
+        <p class="project-desc">Designed an agentic vendor validation system with ABN cross-referencing logic and a pre-screening layer that filtered invalid vendors before downstream API calls. Cut API costs by 50% while maintaining full validation coverage.</p>
+        <div class="metrics">
+          <div class="metric"><strong>50%</strong> API cost reduction</div>
+          <div class="metric">Agentic architecture</div>
+        </div>
+        <div class="stack">
+          <span class="tag">Python</span>
+          <span class="tag">LangChain</span>
+          <span class="tag">AWS</span>
+          <span class="tag">Agentic systems</span>
+          <span class="tag">SQL</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <div>
+            <div class="project-title">Stress detection via physiological signal classification</div>
+            <div class="project-client">Macquarie University &nbsp;·&nbsp; Advanced ML coursework</div>
+          </div>
+          <span class="badge badge-ml">ML project</span>
+        </div>
+        <p class="project-desc">Built a binary classification model detecting stress states from physiological and behavioural features. Compared Logistic Regression, Random Forest, and SVM across feature subsets with full evaluation using precision, recall, F1, and ROC-AUC. Included responsible AI analysis and bias review.</p>
+        <div class="metrics">
+          <div class="metric">3 models compared</div>
+          <div class="metric">ROC-AUC evaluation</div>
+          <div class="metric">Ethical AI analysis</div>
+        </div>
+        <div class="stack">
+          <span class="tag">Python</span>
+          <span class="tag">Scikit-learn</span>
+          <span class="tag">Pandas</span>
+          <span class="tag">Feature engineering</span>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-header">
+          <div>
+            <div class="project-title">E-commerce NLP intelligence system</div>
+            <div class="project-client">Macquarie University &nbsp;·&nbsp; Advanced NLP (COMP8420)</div>
+          </div>
+          <span class="badge badge-academic">Academic</span>
+        </div>
+        <p class="project-desc">Built the core NLP module for a group Amazon review analysis pipeline: text preprocessing, NER/POS tagging, and a TF-IDF product recommendation engine on the Datafiniti Amazon reviews dataset. Integrated with teammates' RAG pipeline, ReAct agent, and aspect-based sentiment analysis.</p>
+        <div class="metrics">
+          <div class="metric">TF-IDF recommendations</div>
+          <div class="metric">NER + POS tagging</div>
+          <div class="metric">RAG pipeline integration</div>
+        </div>
+        <div class="stack">
+          <span class="tag">Python</span>
+          <span class="tag">NLTK</span>
+          <span class="tag">Scikit-learn</span>
+          <span class="tag">TF-IDF</span>
+          <span class="tag">Hugging Face</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section" id="skills">
+    <div class="section-label">Skills</div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-name">Languages</div>
+        <div class="skill-list">Python<br>SQL<br>Bash</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-name">AI / ML</div>
+        <div class="skill-list">Large language models<br>Generative AI<br>Prompt engineering<br>RAG &amp; agentic systems<br>Computer vision<br>NLP<br>Model evaluation</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-name">Libraries</div>
+        <div class="skill-list">Scikit-learn<br>Pandas · NumPy<br>Hugging Face<br>LangChain<br>Matplotlib · Seaborn</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-name">Cloud &amp; platforms</div>
+        <div class="skill-list">AWS Bedrock · S3 · Lambda<br>Microsoft Azure<br>Google Cloud · Vertex AI<br>Snowflake</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-name">Tools</div>
+        <div class="skill-list">Git · GitHub<br>Tableau · Power BI<br>Jupyter<br>JIRA · Confluence</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-name">Domains</div>
+        <div class="skill-list">Document intelligence<br>Identity verification<br>Fraud detection<br>AI governance<br>Insurance &amp; fintech</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="experience">
+    <div class="section-label">Experience</div>
+    <div class="exp-list">
+
+      <div class="exp-item">
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Machine Learning Engineer Intern</div>
+            <div class="exp-company">truuth Pty Ltd &nbsp;·&nbsp; Sydney, Australia &nbsp;·&nbsp; Identity verification &amp; AI</div>
+          </div>
+          <div class="exp-dates">Feb 2026 – Present</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Built multi-model LLM evaluation framework (Claude, Qwen3, AWS Bedrock) — improved accuracy 66% → 88% for PwC insurance client</li>
+          <li>Delivered TAL document intelligence pipeline: 1,603 pages, 100% validation accuracy, production-approved</li>
+          <li>Engineered AI watermark detection system using Qwen3-VL-235B to identify AI-generated content in insurance claims</li>
+          <li>Designed vendor validation agent with ABN pre-screening that reduced API costs by 50%</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">AI Data Quality Associate</div>
+            <div class="exp-company">Amazon &nbsp;·&nbsp; Hyderabad, India</div>
+          </div>
+          <div class="exp-dates">Sept 2023 – May 2024</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Maintained 95%+ data accuracy across AI-powered mapping systems in production environments</li>
+          <li>Automated validation workflows reducing manual effort by 40% and improving processing speed by 30%</li>
+          <li>Reduced error rates by 25% across production data cycles through pipeline improvements</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Academic Tutor — ITAS Program</div>
+            <div class="exp-company">Macquarie University &nbsp;·&nbsp; Sydney, Australia</div>
+          </div>
+          <div class="exp-dates">Mar 2026 – Present</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Provide 1:1 tutoring in IT subjects to First Nations students, adapting technical concepts to individual learning needs</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Inventory Control</div>
+            <div class="exp-company">Woolworths &nbsp;·&nbsp; Sydney, Australia</div>
+          </div>
+          <div class="exp-dates">Aug 2024 – Present</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Analysed inventory data to identify operational inefficiencies, contributing to a 20% improvement in throughput</li>
+          <li>Proposed process changes that reduced order turnaround time by 30% and stock discrepancies by 15%</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section" id="education">
+    <div class="section-label">Education</div>
+    <div class="exp-list">
+      <div class="exp-item">
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Master of Information Technology (Artificial Intelligence)</div>
+            <div class="exp-company">Macquarie University, Sydney &nbsp;·&nbsp; Distinction WAM</div>
+          </div>
+          <div class="exp-dates">Jul 2024 – Jun 2026</div>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Bachelor of Technology, Computer Science &amp; Engineering</div>
+            <div class="exp-company">Hyderabad, India</div>
+          </div>
+          <div class="exp-dates">2018 – 2022</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Certifications</div>
+    <div class="certs">
+      <span class="cert">AWS Machine Learning Foundations</span>
+      <span class="cert">Microsoft Azure AI Fundamentals (AI-900)</span>
+      <span class="cert">AI Solutions on Cisco Infrastructure</span>
+      <span class="cert">Data Science &amp; ML Bootcamp — Udemy</span>
+      <span class="cert">Python for Data Science — Kaggle</span>
+    </div>
+  </div>
+
+  <div class="section" id="contact">
+    <div class="section-label">Contact</div>
+    <div class="contact-grid">
+      <a class="contact-item" href="mailto:snigdha.patibandla@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        snigdha.patibandla@gmail.com
+      </a>
+      <a class="contact-item" href="https://linkedin.com/in/snigdha-patibandla" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        linkedin.com/in/snigdha-patibandla
+      </a>
+      <a class="contact-item" href="https://github.com/SnigdhaP2022" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+        github.com/SnigdhaP2022
+      </a>
+      <div class="contact-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Sydney, Australia &nbsp;·&nbsp; Full work rights
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p class="footer-text">Snigdha Patibandla &nbsp;·&nbsp; Updated June 2026</p>
+  </div>
+
+</div>
+
+</body>
+</html>
